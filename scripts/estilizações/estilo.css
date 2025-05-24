@@ -1,0 +1,345 @@
+body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: #f4f4f9;
+            overflow-x: hidden;
+            transition: background 0.3s;
+        }
+
+        /* Estilo da barra de ferramentas */
+        .toolbar {
+            position: fixed;
+            top: 10px;
+            left: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, #000000C4, #000000C4);
+            padding: 8px;
+            display: flex;
+            gap: 8px;
+            z-index: 1000;
+            border-radius: 3px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            backdrop-filter: blur(18px);
+        }
+
+        .toolbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .toolbar button, .toolbar select {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ecf0f1;
+            cursor: pointer;
+            padding: 6px;
+            transition: all 0.3s ease;
+            min-width: 40px;
+            height: 36px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .toolbar select {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 4px;
+            font-size: 13px;
+            border-radius: 6px;
+            min-width: 80px;
+        }
+
+        .toolbar button:hover, .toolbar select:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .toolbar button.active {
+            background: #00000096;
+            backdrop-filter: blur(20px);
+            border-color: #434343D4;
+            color:#000000;
+        }
+
+        /* Estilo do editor */
+        .editor {
+            margin: 80px 15px 15px;
+            padding: 20px;
+            min-height: calc(100vh - 100px);
+            background: #fff;
+            border: 1px solid #dfe6e9;
+            border-radius: 3px;
+            outline: none;
+            white-space: pre-wrap;
+            font-size: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            box-sizing: border-box;
+        }
+
+        .editor.print-preview {
+            background: #f0f0f0;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+            border: 1px solid #ccc;
+            margin: 80px auto;
+            max-width: 210mm; /* A4 width */
+            min-height: 297mm; /* A4 height */
+            page-break-after: always;
+        }
+
+        .highlight {
+            background-color: #00FF08A1;
+            padding: 2px;
+            border-radius: 4px;
+        }
+
+        .textbox {
+            border: 2px solid #3498db;
+            padding: 10px;
+            display: inline-block;
+            min-width: 100px;
+            min-height: 50px;
+            box-sizing: border-box;
+            background: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .sticky-note {
+            position: absolute;
+            background: #ffd700;
+            padding: 10px;
+            min-width: 100px;
+            min-height: 100px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            z-index: 10;
+            resize: both;
+            overflow: auto;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin: 15px 0;
+            width: 100%;
+            background: #fff;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        td {
+            border: 1px solid #dfe6e9;
+            padding: 8px;
+            min-width: 50px;
+            box-sizing: border-box;
+        }
+
+        .video-preview {
+            max-width: 100%;
+            margin: 15px 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-container {
+            max-width: 400px;
+            margin: 15px 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .drawing-canvas {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            max-width: 100%;
+            margin: 15px 0;
+        }
+
+        .shape-container {
+            position: relative;
+            display: inline-block;
+            margin: 10px;
+        }
+
+        .shape-container svg {
+            display: block;
+        }
+
+        .draggable {
+            position: relative;
+            cursor: move;
+        }
+
+        .resizable {
+            resize: both;
+            overflow: auto;
+        }
+
+        /* Estilo do tema escuro */
+        body.dark-theme {
+            background: #2c3e50;
+        }
+
+        body.dark-theme .editor {
+            background: #34495e;
+            border-color: #2c3e50;
+            color: #ecf0f1;
+        }
+
+        body.dark-theme table {
+            background: #34495e;
+        }
+
+        body.dark-theme td {
+            border-color: #2c3e50;
+            color: #ecf0f1;
+        }
+
+        body.dark-theme .textbox {
+            background: #2c3e50;
+            border-color: #3498db;
+            color: #ecf0f1;
+        }
+
+        body.dark-theme .sticky-note {
+            background: #b8860b;
+        }
+
+        /* Modal para busca e substituição */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .modal-content input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .modal-content button {
+            background: #3498db;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            margin: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .modal-content button:hover {
+            background: #2980b9;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .toolbar {
+                padding: 6px;
+                gap: 6px;
+                top: 8px;
+                border-radius: 10px;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+            }
+
+            .toolbar button, .toolbar select {
+                padding: 4px;
+                min-width: 36px;
+                height: 36px;
+                font-size: 12px;
+            }
+
+            .toolbar select {
+                font-size: 10px;
+                min-width: 70px;
+            }
+
+            .editor {
+                margin-top: 70px;
+                padding: 15px;
+                font-size: 15px;
+                min-height: calc(100vh - 90px);
+            }
+
+            .editor.print-preview {
+                margin: 70px 10px;
+                max-width: 100%;
+                min-height: auto;
+            }
+
+            .textbox, .sticky-note {
+                min-width: 80px;
+                min-height: 40px;
+                padding: 8px;
+            }
+
+            td {
+                min-width: 40px;
+                padding: 6px;
+            }
+
+            .chart-container {
+                max-width: 100%;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .toolbar {
+                padding: 12px;
+                gap: 12px;
+                flex-wrap: nowrap;
+                overflow-x: visible;
+            }
+
+            .toolbar button, .toolbar select {
+                padding: 8px;
+                min-width: 40px;
+                height: 40px;
+            }
+
+            .toolbar select {
+                font-size: 14px;
+                min-width: 100px;
+            }
+
+            .editor {
+                margin: 90px 20px 20px;
+                padding: 25px;
+                font-size: 16px;
+            }
+
+            .textbox, .sticky-note {
+                min-width: 120px;
+                min-height: 60px;
+                padding: 12px;
+            }
+
+            td {
+                min-width: 60px;
+                padding: 10px;
+            }
+        }
